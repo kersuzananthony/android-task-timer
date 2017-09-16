@@ -3,8 +3,32 @@
       xmlns:tools="http://schemas.android.com/tools"
       tools:context="com.kersuzananthony.tasktimer.MainActivity">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/menu_main_addTask"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:icon="@android:drawable/ic_menu_add"
+        android:title="@string/menu_main_add_task"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/menu_main_showDuration"
+        android:orderInCategory="200"
+        android:icon="@android:drawable/ic_menu_view"
+        android:title="@string/menu_main_show_duration"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/menu_main_settings"
+        android:orderInCategory="300"
+        android:title="@string/menu_main_settings"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/menu_main_showAbout"
+        android:orderInCategory="400"
+        android:icon="@android:drawable/ic_menu_info_details"
+        android:title="@string/menu_main_show_about"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/menu_main_generate"
+        android:orderInCategory="500"
+        android:title="@string/menu_main_generate"
+        android:visible="false"
         app:showAsAction="never"/>
 </menu>
