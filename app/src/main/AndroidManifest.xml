@@ -19,6 +19,11 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        
+        <provider
+            android:authorities="com.kersuzananthony.tasktimer.provider"
+            android:name="com.kersuzananthony.tasktimer.data.ApplicationProvider"
+            android:exported="false" />
     </application>
 
 </manifest>
