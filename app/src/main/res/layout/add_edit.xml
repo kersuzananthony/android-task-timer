@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="8dp">
+
+    <EditText
+        android:id="@+id/add_edit_taskNameEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textNoSuggestions"
+        android:hint="@string/task_add_edit_name"
+        android:maxLength="64"/>
+
+    <EditText
+        android:id="@+id/add_edit_taskDescriptionEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:hint="@string/task_add_edit_description"
+        android:maxLength="256"/>
+
+    <EditText
+        android:id="@+id/add_edit_taskSortEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:hint="@string/task_add_edit_sort"
+        android:maxLength="8"/>
+
+    <Button
+        android:id="@+id/add_edit_submitButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:drawableStart="@android:drawable/ic_menu_save"
+        android:text="@string/task_add_edit_submit"/>
+
+</LinearLayout>

@@ -9,4 +9,9 @@
 
     <string name="task_list_item_edit_description">Edit Task</string>
     <string name="task_list_item_delete_description">Delete Task</string>
+
+    <string name="task_add_edit_name">Name of the Task</string>
+    <string name="task_add_edit_description">Description of the Task</string>
+    <string name="task_add_edit_sort">Sort of the Task</string>
+    <string name="task_add_edit_submit">Submit</string>
 </resources>
