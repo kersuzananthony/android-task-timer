@@ -5,4 +5,8 @@
     <string name="menu_main_show_duration">Duration Report</string>
     <string name="menu_main_show_about">About Task Timer</string>
     <string name="menu_main_generate">Generate Data</string>
+    <string name="no_task_message">No Task Selected</string>
+
+    <string name="task_list_item_edit_description">Edit Task</string>
+    <string name="task_list_item_delete_description">Delete Task</string>
 </resources>
