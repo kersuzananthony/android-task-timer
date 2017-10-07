@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -19,11 +19,21 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        
+
         <provider
+            android:name=".data.ApplicationProvider"
             android:authorities="com.kersuzananthony.tasktimer.provider"
-            android:name="com.kersuzananthony.tasktimer.data.ApplicationProvider"
-            android:exported="false" />
+            android:exported="false"/>
+
+        <activity
+            android:name=".activities.AddEditActivity"
+            android:label="@string/title_activity_add_edit"
+            android:parentActivityName=".activities.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.kersuzananthony.tasktimer.activities.MainActivity"/>
+        </activity>
     </application>
 
 </manifest>

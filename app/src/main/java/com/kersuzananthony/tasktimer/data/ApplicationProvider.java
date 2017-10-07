@@ -2,6 +2,7 @@ package com.kersuzananthony.tasktimer.data;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -70,7 +71,14 @@ public class ApplicationProvider extends ContentProvider {
         }
 
         SQLiteDatabase db = mOpenHelper.getReadableDatabase();
-        return queryBuilder.query(db, projection, selection, selectionArgs, null, null, sortOrder);
+        Cursor cursor = queryBuilder.query(db, projection, selection, selectionArgs, null, null, sortOrder);
+
+        Context context = getContext();
+        if (context != null) {
+            cursor.setNotificationUri(context.getContentResolver(), uri);
+        }
+
+        return cursor;
     }
 
     @Nullable
@@ -100,7 +108,7 @@ public class ApplicationProvider extends ContentProvider {
 
         final SQLiteDatabase db;
         Uri returnUri = null;
-        long recordId;
+        long recordId = -1;
 
         switch (match) {
             case TASKS:
@@ -126,6 +134,10 @@ public class ApplicationProvider extends ContentProvider {
                 break;
             default:
                 throw new UnsupportedOperationException("Cannot insert data for the provided Uri");
+        }
+
+        if (recordId > 0 && getContext() != null) {
+            getContext().getContentResolver().notifyChange(uri, null);
         }
 
         return returnUri;
@@ -159,6 +171,10 @@ public class ApplicationProvider extends ContentProvider {
                 throw new UnsupportedOperationException("Cannot insert data for the provided Uri");
         }
 
+        if (count > 0 && getContext() != null) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+
         return count;
     }
 
@@ -188,6 +204,10 @@ public class ApplicationProvider extends ContentProvider {
                 break;
             default:
                 throw new UnsupportedOperationException("Cannot insert data for the provided Uri");
+        }
+
+        if (count > 0 && getContext() != null) {
+            getContext().getContentResolver().notifyChange(uri, null);
         }
 
         return count;

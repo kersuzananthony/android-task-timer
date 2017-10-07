@@ -14,4 +14,8 @@
     <string name="task_add_edit_description">Description of the Task</string>
     <string name="task_add_edit_sort">Sort of the Task</string>
     <string name="task_add_edit_submit">Submit</string>
+    <string name="title_activity_add_edit">AddEditActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="instructions_heading">Instructions</string>
+    <string name="instructions_description">Use the Add button in the toolbar above to create a new task.</string>
 </resources>

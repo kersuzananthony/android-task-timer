@@ -26,7 +26,7 @@ public class TaskContract {
     public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd." + CONTENT_AUTHORITY + "." + PATH_TASKS;
     public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.dir/" + CONTENT_AUTHORITY + "." + PATH_TASKS;
 
-    static Uri buildTaskUri(long taskId) {
+    public static Uri buildTaskUri(long taskId) {
         return ContentUris.withAppendedId(CONTENT_URI, taskId);
     }
 

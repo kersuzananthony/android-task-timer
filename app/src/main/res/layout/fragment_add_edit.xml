@@ -1,12 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_add_edit"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.kersuzananthony.tasktimer.activities.AddEditActivityFragment"
+    android:layout_margin="8dp"
+    android:orientation="vertical"
+    tools:context="com.kersuzananthony.tasktimer.AddEditActivityFragment"
     tools:showIn="@layout/activity_add_edit">
 
+    <EditText
+        android:id="@+id/add_edit_taskNameEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/task_add_edit_name"
+        android:inputType="textNoSuggestions"
+        android:maxLength="64"/>
 
-</android.support.constraint.ConstraintLayout>
+    <EditText
+        android:id="@+id/add_edit_taskDescriptionEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/task_add_edit_description"
+        android:inputType="textMultiLine"
+        android:maxLength="256"/>
+
+    <EditText
+        android:id="@+id/add_edit_taskSortEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/task_add_edit_sort"
+        android:inputType="number"
+        android:maxLength="8"/>
+
+    <Button
+        android:id="@+id/add_edit_submitButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:drawableStart="@android:drawable/ic_menu_save"
+        android:text="@string/task_add_edit_submit"/>
+
+</LinearLayout>

@@ -1,21 +1,22 @@
-package com.kersuzananthony.tasktimer;
+package com.kersuzananthony.tasktimer.activities;
 
-import android.content.ContentResolver;
-import android.content.ContentValues;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.kersuzananthony.tasktimer.data.TaskContract;
+import com.kersuzananthony.tasktimer.R;
+import com.kersuzananthony.tasktimer.models.Task;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
+    private static final String ADD_EDIT_FRAGMENT = "AddEditFragment";
+
+    private boolean mTwoPane = false; // Activity in two pane mode
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,33 +24,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
-        String[] projection = {
-                TaskContract.TaskEntry._ID,
-                TaskContract.TaskEntry.COLUMN_NAME,
-                TaskContract.TaskEntry.COLUMN_DESCRIPTION,
-                TaskContract.TaskEntry.COLUMN_SORT_ORDER
-        };
-        ContentResolver resolver = getContentResolver();
-        Cursor cursor = resolver.query(TaskContract.CONTENT_URI, projection, null, null, TaskContract.TaskEntry.COLUMN_NAME);
-
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(TaskContract.TaskEntry.COLUMN_NAME, "First task");
-        contentValues.put(TaskContract.TaskEntry.COLUMN_DESCRIPTION, "First task description");
-        contentValues.put(TaskContract.TaskEntry.COLUMN_SORT_ORDER, 1);
-        Uri uri = resolver.insert(TaskContract.CONTENT_URI, contentValues);
-        Log.d(TAG, "onCreate: uri inserted is: " + uri);
-
-        if (cursor != null) {
-            Log.d(TAG, "onCreate: " + cursor.getCount());
-
-            while (cursor.moveToNext()) {
-                Log.d(TAG, "onCreate: hasNextLine()");
-            }
-
-            cursor.close();
-        }
     }
 
     @Override
@@ -66,11 +40,31 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.menu_main_settings) {
-            return true;
+        switch (id) {
+            case R.id.menu_main_addTask:
+                taskEditRequest(null);
+                return true;
+            case R.id.menu_main_showDuration:
+                break;
+            case R.id.menu_main_settings:
+                break;
+            case R.id.menu_main_showAbout:
+                break;
+            case R.id.menu_main_generate:
+                break;
+            default:
+                break;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void taskEditRequest(@Nullable Task task) {
+        if (mTwoPane) {
+            Log.d(TAG, "taskEditRequest: In two pane mode");
+        } else {
+            Log.d(TAG, "taskEditRequest: In phone portrait mode");
+            startActivity(AddEditActivity.newIntent(this, task));
+        }
     }
 }
