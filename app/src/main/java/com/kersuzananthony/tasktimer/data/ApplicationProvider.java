@@ -159,7 +159,7 @@ public class ApplicationProvider extends ContentProvider {
             case TASK_ID:
                 db = mOpenHelper.getWritableDatabase();
                 long taskId = TaskContract.getTaskId(uri);
-                selectionCriteria = TaskContract.TaskEntry.TABLE_NAME + " = " + taskId;
+                selectionCriteria = TaskContract.TaskEntry._ID + " = " + taskId;
 
                 if (selection != null && selection.length() > 0) {
                     selectionCriteria += " AND (" + selection + ")";

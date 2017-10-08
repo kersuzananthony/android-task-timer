@@ -4,6 +4,7 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,8 +53,9 @@ public class AddEditActivityFragment extends Fragment {
             if (task != null) {
                 mTaskNameEditText.setText(task.getName());
                 mTaskDescriptionEditText.setText(task.getDescription());
-                mTaskSortOrderEditText.setText(task.getSortOrder());
+                mTaskSortOrderEditText.setText(Integer.toString(task.getSortOrder()));
                 mEditMode = FragmentEditMode.EDIT;
+                mTask = task;
             } else {
                 mEditMode = FragmentEditMode.ADD;
             }
@@ -90,7 +92,7 @@ public class AddEditActivityFragment extends Fragment {
                     contentValues.put(TaskContract.TaskEntry.COLUMN_NAME, mTaskNameEditText.getText().toString());
                 }
 
-                if (!mTaskDescriptionEditText.getText().toString().equals(mTask.getName())) {
+                if (!mTaskDescriptionEditText.getText().toString().equals(mTask.getDescription())) {
                     contentValues.put(TaskContract.TaskEntry.COLUMN_DESCRIPTION, mTaskDescriptionEditText.getText().toString());
                 }
 
@@ -99,6 +101,7 @@ public class AddEditActivityFragment extends Fragment {
                 }
 
                 if (contentValues.size() != 0) {
+                    Log.d(TAG, "saveData: Begin update");
                     contentResolver.update(TaskContract.buildTaskUri(mTask.getId()), contentValues, null, null);
                 }
                 break;

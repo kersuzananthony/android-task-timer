@@ -1,6 +1,7 @@
 package com.kersuzananthony.tasktimer.activities;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -9,9 +10,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.kersuzananthony.tasktimer.R;
+import com.kersuzananthony.tasktimer.adapters.CursorRecyclerViewAdapter;
+import com.kersuzananthony.tasktimer.data.TaskContract;
 import com.kersuzananthony.tasktimer.models.Task;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements CursorRecyclerViewAdapter.OnTaskClickListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final String ADD_EDIT_FRAGMENT = "AddEditFragment";
@@ -57,6 +60,18 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onEditClick(@NonNull Task task) {
+        Log.d(TAG, "onEditClick: " + task.getName());
+        taskEditRequest(task);
+    }
+
+    @Override
+    public void onDeleteClick(@NonNull Task task) {
+        Log.d(TAG, "onDeleteClick: " + task.getName());
+        getContentResolver().delete(TaskContract.buildTaskUri(task.getId()), null, null);
     }
 
     private void taskEditRequest(@Nullable Task task) {

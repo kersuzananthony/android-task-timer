@@ -10,15 +10,23 @@ import android.widget.TextView;
 
 import com.kersuzananthony.tasktimer.R;
 import com.kersuzananthony.tasktimer.data.TaskContract;
+import com.kersuzananthony.tasktimer.models.Task;
 
 public class CursorRecyclerViewAdapter extends RecyclerView.Adapter<CursorRecyclerViewAdapter.TaskViewHolder> {
+
+    public interface OnTaskClickListener {
+        void onEditClick(Task task);
+        void onDeleteClick(Task task);
+    }
 
     private static final String TAG = "CursorRecyclerViewAdapt";
 
     private Cursor mCursor;
+    OnTaskClickListener mListener;
 
-    public CursorRecyclerViewAdapter(Cursor cursor) {
+    public CursorRecyclerViewAdapter(Cursor cursor, OnTaskClickListener listener) {
         mCursor = cursor;
+        mListener = listener;
     }
 
     @Override
@@ -36,10 +44,12 @@ public class CursorRecyclerViewAdapter extends RecyclerView.Adapter<CursorRecycl
             if (!mCursor.moveToPosition(position)) {
                 throw new IllegalStateException("Could not move cursor to " + position);
             } else {
-                String name = mCursor.getString(mCursor.getColumnIndex(TaskContract.TaskEntry.COLUMN_NAME));
-                String description = mCursor.getString(mCursor.getColumnIndex(TaskContract.TaskEntry.COLUMN_DESCRIPTION));
+                Task task = new Task(mCursor.getLong(mCursor.getColumnIndex(TaskContract.TaskEntry._ID)),
+                        mCursor.getString(mCursor.getColumnIndex(TaskContract.TaskEntry.COLUMN_NAME)),
+                        mCursor.getString(mCursor.getColumnIndex(TaskContract.TaskEntry.COLUMN_DESCRIPTION)),
+                        mCursor.getInt(mCursor.getColumnIndex(TaskContract.TaskEntry.COLUMN_SORT_ORDER)));
 
-                holder.bindView(name, description);
+                holder.bindView(task, mListener);
             }
         }
     }
@@ -81,11 +91,34 @@ public class CursorRecyclerViewAdapter extends RecyclerView.Adapter<CursorRecycl
             deleteButton = (ImageButton) itemView.findViewById(R.id.task_list_item_deleteButton);
         }
 
-        void bindView(String name, String description) {
-            nameTextView.setText(name);
-            descriptionTextView.setText(description);
+        void bindView(final Task task, final OnTaskClickListener listener) {
+            nameTextView.setText(task.getName());
+            descriptionTextView.setText(task.getDescription());
             editButton.setVisibility(View.VISIBLE);
             deleteButton.setVisibility(View.VISIBLE);
+
+            View.OnClickListener clickListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    switch (view.getId()) {
+                        case R.id.task_list_item_editButton:
+                            if (listener != null) {
+                                listener.onEditClick(task);
+                            }
+                            break;
+                        case R.id.task_list_item_deleteButton:
+                            if (listener != null) {
+                                listener.onDeleteClick(task);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            };
+
+            editButton.setOnClickListener(clickListener);
+            deleteButton.setOnClickListener(clickListener);
         }
 
         void bindEmpty() {
