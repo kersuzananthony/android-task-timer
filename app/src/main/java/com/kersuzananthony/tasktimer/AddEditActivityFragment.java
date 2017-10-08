@@ -2,6 +2,7 @@ package com.kersuzananthony.tasktimer;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -20,7 +21,11 @@ import com.kersuzananthony.tasktimer.models.Task;
  */
 public class AddEditActivityFragment extends Fragment {
 
-    public enum FragmentEditMode { ADD, EDIT };
+    public enum FragmentEditMode { ADD, EDIT }
+
+    public interface OnFragmentInteractionListener {
+        void onSaveClicked();
+    }
 
     private static final String TAG = AddEditActivityFragment.class.getSimpleName();
     public static final String FRAGMENT_TAG = AddEditActivity.class.getName();
@@ -31,6 +36,7 @@ public class AddEditActivityFragment extends Fragment {
     private EditText mTaskSortOrderEditText;
     private Button mSubmitButton;
     private Task mTask;
+    private OnFragmentInteractionListener mListener;
 
     public AddEditActivityFragment() {
     }
@@ -71,6 +77,24 @@ public class AddEditActivityFragment extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener =  null;
     }
 
     private void saveData() {
@@ -116,6 +140,10 @@ public class AddEditActivityFragment extends Fragment {
                 break;
             default:
                 break;
+        }
+
+        if (mListener != null) {
+            mListener.onSaveClicked();
         }
     }
 }

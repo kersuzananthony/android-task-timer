@@ -9,12 +9,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 
 import com.kersuzananthony.tasktimer.AddEditActivityFragment;
 import com.kersuzananthony.tasktimer.R;
 import com.kersuzananthony.tasktimer.models.Task;
 
-public class AddEditActivity extends AppCompatActivity {
+public class AddEditActivity extends AppCompatActivity implements AddEditActivityFragment.OnFragmentInteractionListener {
 
     private static final String TAG = AddEditActivity.class.getSimpleName();
 
@@ -43,6 +44,13 @@ public class AddEditActivity extends AppCompatActivity {
         setTaskToFragment();
     }
 
+    @Override
+    protected void onDestroy() {
+        Log.d(TAG, "onDestroy: ");
+
+        super.onDestroy();
+    }
+
     private void setTaskToFragment() {
         Bundle arguments = getIntent().getExtras();
 
@@ -54,4 +62,8 @@ public class AddEditActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
+    @Override
+    public void onSaveClicked() {
+        onBackPressed();
+    }
 }
