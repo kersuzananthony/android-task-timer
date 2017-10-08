@@ -19,7 +19,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="8dp"
-        tools:text="@string/test_html"
         android:textColorLink="@color/colorPrimary"
         android:clickable="true"
         android:autoLink="web"

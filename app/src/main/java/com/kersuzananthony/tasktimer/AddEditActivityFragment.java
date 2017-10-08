@@ -23,6 +23,7 @@ public class AddEditActivityFragment extends Fragment {
     public enum FragmentEditMode { ADD, EDIT };
 
     private static final String TAG = AddEditActivityFragment.class.getSimpleName();
+    public static final String FRAGMENT_TAG = AddEditActivity.class.getName();
 
     private FragmentEditMode mEditMode;
     private EditText mTaskNameEditText;
@@ -44,8 +45,7 @@ public class AddEditActivityFragment extends Fragment {
         mTaskSortOrderEditText = (EditText) view.findViewById(R.id.add_edit_taskSortEditText);
         mSubmitButton = (Button) view.findViewById(R.id.add_edit_submitButton);
 
-        // Get task?
-        Bundle arguments = getActivity().getIntent().getExtras();
+        Bundle arguments = getArguments();
 
         final Task task;
         if (arguments != null) {
