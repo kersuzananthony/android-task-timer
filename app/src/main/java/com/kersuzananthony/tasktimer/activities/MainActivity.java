@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.kersuzananthony.tasktimer.AddEditActivityFragment;
+import com.kersuzananthony.tasktimer.ApplicationDialogFragment;
 import com.kersuzananthony.tasktimer.R;
 import com.kersuzananthony.tasktimer.adapters.CursorRecyclerViewAdapter;
 import com.kersuzananthony.tasktimer.data.TaskContract;
@@ -20,10 +21,13 @@ import com.kersuzananthony.tasktimer.models.Task;
 
 public class MainActivity extends AppCompatActivity implements
         CursorRecyclerViewAdapter.OnTaskClickListener,
-        AddEditActivityFragment.OnFragmentInteractionListener {
+        AddEditActivityFragment.OnFragmentInteractionListener,
+        ApplicationDialogFragment.DialogEvents{
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final String ADD_EDIT_FRAGMENT = "AddEditFragment";
+    private static final String TASK_ID = "task_id";
+    public static final int DELETE_DIALOG_ID = 1;
 
     private boolean mTwoPane = false; // Activity in two pane mode
 
@@ -79,7 +83,16 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onDeleteClick(@NonNull Task task) {
         Log.d(TAG, "onDeleteClick: " + task.getName());
-        getContentResolver().delete(TaskContract.buildTaskUri(task.getId()), null, null);
+
+        ApplicationDialogFragment dialogFragment = new ApplicationDialogFragment();
+        Bundle arguments = new Bundle();
+        arguments.putInt(ApplicationDialogFragment.DIALOG_ID, DELETE_DIALOG_ID);
+        arguments.putString(ApplicationDialogFragment.DIALOG_MESSAGE, getString(R.string.deldial_message, task.getId(), task.getName()));
+        arguments.putInt(ApplicationDialogFragment.DIALOG_POSITIVE_RID, R.string.deldial_title);
+        arguments.putLong(MainActivity.TASK_ID, task.getId());
+        dialogFragment.setArguments(arguments);
+
+        dialogFragment.show(getSupportFragmentManager(), null);
     }
 
     @Override
@@ -91,6 +104,24 @@ public class MainActivity extends AppCompatActivity implements
         if (fragment != null) {
             fragmentManager.beginTransaction().remove(fragment).commit();
         }
+    }
+
+    @Override
+    public void onPositiveDialogResult(int dialogId, Bundle args) {
+        long taskId = args.getLong(MainActivity.TASK_ID);
+        if (taskId == 0L) return;
+
+        getContentResolver().delete(TaskContract.buildTaskUri(taskId), null, null);
+    }
+
+    @Override
+    public void onNegativeDialogResult(int dialogId, Bundle args) {
+
+    }
+
+    @Override
+    public void onCancel(int dialogId) {
+
     }
 
     private void taskEditRequest(@Nullable Task task) {
