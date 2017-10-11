@@ -99,12 +99,8 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onSaveClicked() {
         Log.d(TAG, "onSaveClicked: ");
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment fragment = fragmentManager.findFragmentById(R.id.main_activity_taskDetailContainer);
 
-        if (fragment != null) {
-            fragmentManager.beginTransaction().remove(fragment).commit();
-        }
+        removeAddEditFragment();
     }
 
     @Override
@@ -115,6 +111,7 @@ public class MainActivity extends AppCompatActivity implements
                 if (taskId == 0L) return;
 
                 getContentResolver().delete(TaskContract.buildTaskUri(taskId), null, null);
+                removeAddEditFragment();
                 break;
             case DIALOG_ID_CLOSE:
                 break;
@@ -157,6 +154,15 @@ public class MainActivity extends AppCompatActivity implements
 
             applicationDialogFragment.setArguments(args);
             applicationDialogFragment.show(fragmentManager, null);
+        }
+    }
+
+    private void removeAddEditFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment fragment = fragmentManager.findFragmentById(R.id.main_activity_taskDetailContainer);
+
+        if (fragment != null) {
+            fragmentManager.beginTransaction().remove(fragment).commit();
         }
     }
 
