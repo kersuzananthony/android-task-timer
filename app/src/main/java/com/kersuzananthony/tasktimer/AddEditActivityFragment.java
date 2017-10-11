@@ -97,6 +97,10 @@ public class AddEditActivityFragment extends Fragment {
         mListener =  null;
     }
 
+    public boolean canClose() {
+        return false;
+    }
+
     private void saveData() {
         int sortOrder;
 

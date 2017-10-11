@@ -23,4 +23,7 @@
     <string name="cancel">Cancel</string>
     <string name="deldial_title">Delete</string>
     <string name="deldial_message">Deleting will also delete all timings associated with the task id %1$d: %2$s</string>
+    <string name="close_edit_dialog_message">You have unsaved changes, do you want to abandon the changes or continue editing?</string>
+    <string name="close_edit_dialog_positiveCaption">Continue editing</string>
+    <string name="close_edit_dialog_negativeCaption">Abandon changes</string>
 </resources>
